@@ -7,7 +7,7 @@ import java.util.List;
 public class Lotto {
   private final List<Integer> numbers;
   private Rank rank;
-ㅇ  private final static int LOTTO_NUMBER_SIZE = 6;
+  private final static int LOTTO_NUMBER_SIZE = 6;
 
   public Lotto(List<Integer> numbers) {
     long size = numbers.stream()
