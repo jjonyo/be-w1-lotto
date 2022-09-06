@@ -1,6 +1,9 @@
 package lotto;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class LottoView {
   Scanner scanner = new Scanner(System.in);
@@ -21,18 +24,30 @@ public class LottoView {
       System.out.println(lotto.toString());
     };
 
+    scanner.nextLine();
+
     // 당첨번호 입력받는 메소드 호출
     System.out.println("지난 주 당첨 번호를 입력 해 주세요.");
     String winningNumber = scanner.nextLine();
 
     // 당첨번호 파싱하여 integer array 반환하는 메소드
+    List<Integer> splitNumbers = Arrays.stream(winningNumber.split(", "))
+            .mapToInt(Integer::parseInt)
+            .boxed()
+            .collect(Collectors.toList());
 
+    lottoService.setWinningLotto(splitNumbers);
 
     // 당첨 계산 (lottoService 호출)
+    lottoService.calculateRank();
 
 
     // 당첨 통계 출력
-
+    List<Lotto> lottoList = lottoService.getLottoList();
+    for (Lotto lotto : lottoList) {
+      System.out.println(lotto.toString());
+      System.out.println(lotto.getRank());
+    }
 
   }
 }

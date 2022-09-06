@@ -8,9 +8,10 @@ import java.util.stream.IntStream;
 
 public class LottoService {
   private final List<Lotto> lottoList = new ArrayList<>();
-  private static List<Integer> numberList = IntStream.range(1, 46)
+  private static final List<Integer> numberList = IntStream.range(1, 46)
           .boxed()
           .collect(Collectors.toList());
+  private Lotto winningLotto;
 
 
   public void generateLottoList(int size) {
@@ -21,6 +22,10 @@ public class LottoService {
     }
   }
 
+  public void setWinningLotto(List<Integer> numbers) {
+    winningLotto = new Lotto(numbers);
+  }
+
   public List<Lotto> getLottoList() {
     return lottoList;
   }
@@ -29,4 +34,10 @@ public class LottoService {
     return new Lotto(numberList.subList(0, 6));
   }
 
+  public void calculateRank() {
+    //lottoList를 돌면서 각각의 로또에 대해 Rank를 계산하여 Lotto에 저장.
+    for (Lotto lotto : lottoList) {
+      lotto.calculateRank(winningLotto);
+    }
+  }
 }
