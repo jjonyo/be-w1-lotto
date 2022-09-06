@@ -17,7 +17,7 @@ public class LottoView {
     lottoService.setWinningLotto(winningLotto);
     lottoService.calculateLottoRank();
 
-    printWinningResult(lottoService.getLottoList());
+    calculateWinningResult(lottoService.getLottoList());
   }
 
   private Lotto createWinningLotto() {
@@ -59,7 +59,7 @@ public class LottoView {
     return price;
   }
 
-  public void printWinningResult(List<Lotto> lottoList) {
+  public void calculateWinningResult(List<Lotto> lottoList) {
     Map<Rank, Integer> map = new EnumMap<>(Rank.class);
 
     long earningPrice = 0;
@@ -71,19 +71,21 @@ public class LottoView {
     for (Lotto lotto : lottoList) {
       if (lotto.getRank() == null) continue;
       map.put(lotto.getRank(), map.get(lotto.getRank()) + 1);
+      earningPrice += lotto.getRank().getWinningMoney();
     }
 
+    long principal = (long) LOTTO_PRICE * lottoList.size();
+    double earningRatio = ((double) (earningPrice - principal) / principal) * 100;
+
+    printWinningResult(map, earningRatio);
+  }
+
+  public void printWinningResult(Map<Rank, Integer> map, double earningRatio) {
     System.out.println("당첨 통계\n---------");
     for (Rank rank : Rank.values()) {
       int count = map.get(rank);
       System.out.printf("%d개 일치 (%d원)- %d개%n", rank.getCountOfMatch(), rank.getWinningMoney(), count);
-      earningPrice += ((long) rank.getWinningMoney() * count);
     }
-
-    long principal = (long) LOTTO_PRICE * lottoList.size();
-    // 원래 금액, 획득한 금액
-    double earningRatio = ((double) (earningPrice - principal) / principal) * 100;
-
     System.out.printf("총 수익률은 %.2f%%입니다.%n", earningRatio);
   }
 }
