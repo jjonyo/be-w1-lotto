@@ -7,10 +7,18 @@ import java.util.List;
 public class Lotto {
   private final List<Integer> numbers;
   private Rank rank;
+  private final static int LOTTO_NUMBER_SIZE = 6;
 
   public Lotto(List<Integer> numbers) {
-    Collections.sort(numbers);
+    long size = numbers.stream()
+            .distinct()
+            .count();
 
+    if (size != LOTTO_NUMBER_SIZE) {
+      throw new RuntimeException("로또의 숫자 개수가 잘못되었습니다. 현재 개수 : " + numbers.size());
+    }
+
+    Collections.sort(numbers);
     this.numbers = new ArrayList<>(numbers);
   }
 
@@ -35,7 +43,6 @@ public class Lotto {
 
     return countOfMatch;
   }
-
 
   public Rank getRank() {
     return rank;
