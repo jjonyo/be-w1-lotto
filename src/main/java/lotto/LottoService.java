@@ -13,6 +13,13 @@ public class LottoService {
           .collect(Collectors.toList());
   private Lotto winningLotto;
 
+  public int price;
+  public int size;
+
+  public void setPrice(int inputValue) {
+    price = inputValue;
+    size = price / 1000;
+  }
 
   public void generateLottoList(int size) {
     lottoList.clear();
