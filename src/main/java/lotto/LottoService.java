@@ -13,35 +13,28 @@ public class LottoService {
           .collect(Collectors.toList());
   private Lotto winningLotto;
 
-  public int price;
-  public int size;
-
-  public void setPrice(int inputValue) {
-    price = inputValue;
-    size = price / 1000;
-  }
-
   public void generateLottoList(int size) {
     lottoList.clear();
 
-    for (int i=0; i<size; i++) {
+    for (int i = 0; i < size; i++) {
       lottoList.add(generateRandomLotto());
     }
   }
 
-  public void setWinningLotto(List<Integer> numbers) {
-    winningLotto = new Lotto(numbers);
+  public void setWinningLotto(Lotto winningLotto) {
+    this.winningLotto = winningLotto;
   }
 
   public List<Lotto> getLottoList() {
     return lottoList;
   }
+
   private Lotto generateRandomLotto() {
     Collections.shuffle(numberList);
     return new Lotto(numberList.subList(0, 6));
   }
 
-  public void calculateRank() {
+  public void calculateLottoRank() {
     //lottoList를 돌면서 각각의 로또에 대해 Rank를 계산하여 Lotto에 저장.
     for (Lotto lotto : lottoList) {
       lotto.calculateRank(winningLotto);
