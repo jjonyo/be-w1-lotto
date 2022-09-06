@@ -6,6 +6,8 @@ public class Main {
         return "Hello";
     }
     public static void main(String[] args) {
-        System.out.println(Main.getHello());
+        LottoView lottoView = new LottoView();
+
+        lottoView.start();
     }
 }
