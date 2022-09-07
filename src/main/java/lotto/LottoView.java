@@ -103,6 +103,7 @@ public class LottoView {
   public void printWinningResult(Map<Rank, Integer> map, double earningRatio) {
     System.out.println("당첨 통계\n---------");
     for (Rank rank : Rank.values()) {
+      if (rank == Rank.NONE) continue;
       int count = map.get(rank);
       String bonusString = rank == Rank.SECOND ? "보너스볼 일치" : "";
       System.out.printf("%d개 일치 %s (%d원)- %d개%n", rank.getCountOfMatch(), bonusString, rank.getWinningMoney(), count);
