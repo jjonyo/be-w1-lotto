@@ -46,8 +46,8 @@ class RankTest {
     Rank rank2 = Rank.valueOf(1, false);
 
     //then
-    assertThat(rank1).isNull();
-    assertThat(rank2).isNull();
+    assertThat(rank1).isEqualTo(Rank.NONE);
+    assertThat(rank2).isEqualTo(Rank.NONE);
   }
 
 }
