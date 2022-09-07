@@ -60,9 +60,14 @@ public class LottoView {
   }
 
   public void calculateWinningResult(List<Lotto> lottoList) {
-    Map<Rank, Integer> map = new EnumMap<>(Rank.class);
+    Map<Rank, Integer> resultMap = getResultMap(lottoList);
+    double earningRatio = getEarningRatio(lottoList);
 
-    long earningPrice = 0;
+    printWinningResult(resultMap, earningRatio);
+  }
+
+  private Map<Rank, Integer> getResultMap(List<Lotto> lottoList) {
+    Map<Rank, Integer> map = new EnumMap<>(Rank.class);
 
     for (Rank rank : Rank.values()) {
       map.put(rank, 0);
@@ -71,13 +76,22 @@ public class LottoView {
     for (Lotto lotto : lottoList) {
       if (lotto.getRank() == null) continue;
       map.put(lotto.getRank(), map.get(lotto.getRank()) + 1);
+    }
+
+    return map;
+  }
+
+  private double getEarningRatio(List<Lotto> lottoList) {
+    long earningPrice = 0;
+
+    for (Lotto lotto : lottoList) {
+      if (lotto.getRank() == null) continue;
       earningPrice += lotto.getRank().getWinningMoney();
     }
 
     long principal = (long) LOTTO_PRICE * lottoList.size();
-    double earningRatio = ((double) (earningPrice - principal) / principal) * 100;
 
-    printWinningResult(map, earningRatio);
+    return ((double) (earningPrice - principal) / principal) * 100;
   }
 
   public void printWinningResult(Map<Rank, Integer> map, double earningRatio) {
