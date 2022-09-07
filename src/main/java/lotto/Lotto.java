@@ -3,10 +3,12 @@ package lotto;
 import java.util.List;
 
 public class Lotto extends BaseLotto {
+  private final LottoType type;
   private Rank rank;
 
-  public Lotto(List<Integer> numbers) {
+  public Lotto(List<Integer> numbers, LottoType type) {
     super(numbers);
+    this.type = type;
   }
 
   public void calculateRank(WinningLotto winningLotto) {
@@ -35,5 +37,9 @@ public class Lotto extends BaseLotto {
 
   public Rank getRank() {
     return rank;
+  }
+
+  public LottoType getType() {
+    return type;
   }
 }

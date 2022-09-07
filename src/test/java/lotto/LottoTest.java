@@ -15,7 +15,7 @@ class LottoTest {
     void calculateRank() {
         //given
         WinningLotto winningLotto = new WinningLotto(Arrays.asList(8, 9, 10, 11, 12, 13), 7);
-        Lotto lotto = new Lotto(Arrays.asList(8, 9, 10, 11, 12, 7));
+        Lotto lotto = new Lotto(Arrays.asList(8, 9, 10, 11, 12, 7), LottoType.MANUAL);
 
         //when
         lotto.calculateRank(winningLotto);
