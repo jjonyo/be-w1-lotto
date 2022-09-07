@@ -37,22 +37,6 @@ class LottoServiceTest {
   }
 
   @Test
-  @DisplayName("로또를 다시 생성하면 기존의 로또는 삭제하고 새로 생성해야 한다.")
-  void clearLottoListWhenRegenerate() {
-    //given
-    int size = 10;
-
-    //when
-    lottoService.generateLottoList(size);
-    lottoService.generateLottoList(size);
-    lottoService.generateLottoList(size);
-    List<Lotto> lottoList = lottoService.getLottoList();
-
-    //then
-    assertThat(lottoList.size()).isEqualTo(size);
-  }
-
-  @Test
   @DisplayName("로또의 당첨 결과를 계산할 수 있어야 한다.")
   void calculateLottoRank() {
     //given
