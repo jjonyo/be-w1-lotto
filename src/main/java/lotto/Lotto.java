@@ -29,7 +29,10 @@ public class Lotto {
   public void calculateRank(Lotto winningLotto) {
     int countOfMatch = countMatchNumber(winningLotto);
 
-    this.rank = Rank.valueOf(countOfMatch);
+    //TODO :: bonus 맞는지 확인
+    boolean isBonusMatch = true;
+
+    this.rank = Rank.valueOf(countOfMatch, isBonusMatch);
   }
 
   private int countMatchNumber(Lotto winningLotto) {
