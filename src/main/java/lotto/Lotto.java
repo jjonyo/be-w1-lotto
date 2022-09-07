@@ -1,41 +1,30 @@
 package lotto;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Lotto {
-  private final List<Integer> numbers;
+public class Lotto extends BaseLotto {
   private Rank rank;
-  private final static int LOTTO_NUMBER_SIZE = 6;
 
   public Lotto(List<Integer> numbers) {
-    long size = numbers.stream()
-            .distinct()
-            .count();
-
-    if (size != LOTTO_NUMBER_SIZE) {
-      throw new RuntimeException("로또의 숫자 개수가 잘못되었습니다. 현재 개수 : " + numbers.size());
-    }
-
-    Collections.sort(numbers);
-    this.numbers = new ArrayList<>(numbers);
+    super(numbers);
   }
 
-  public List<Integer> getNumbers() {
-    return numbers;
-  }
-
-  public void calculateRank(Lotto winningLotto) {
+  public void calculateRank(WinningLotto winningLotto) {
     int countOfMatch = countMatchNumber(winningLotto);
 
-    this.rank = Rank.valueOf(countOfMatch);
+    boolean isBonusMatch = getBonusMatch(winningLotto);
+
+    this.rank = Rank.valueOf(countOfMatch, isBonusMatch);
   }
 
-  private int countMatchNumber(Lotto winningLotto) {
+  private boolean getBonusMatch(WinningLotto winningLotto) {
+    return this.getNumbers().contains(winningLotto.getBonusNumber());
+  }
+
+  private int countMatchNumber(WinningLotto winningLotto) {
     int countOfMatch = 0;
 
-    for (Integer number : numbers) {
+    for (Integer number : this.getNumbers()) {
       if (winningLotto.getNumbers().contains(number)) {
         countOfMatch += 1;
       }
@@ -46,10 +35,5 @@ public class Lotto {
 
   public Rank getRank() {
     return rank;
-  }
-
-  @Override
-  public String toString() {
-    return numbers.toString();
   }
 }

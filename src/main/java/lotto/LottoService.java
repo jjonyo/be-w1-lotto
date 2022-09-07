@@ -11,7 +11,7 @@ public class LottoService {
   private static final List<Integer> numberList = IntStream.range(1, 46)
           .boxed()
           .collect(Collectors.toList());
-  private Lotto winningLotto;
+  private WinningLotto winningLotto;
 
   public void generateLottoList(int size) {
     lottoList.clear();
@@ -21,7 +21,7 @@ public class LottoService {
     }
   }
 
-  public void setWinningLotto(Lotto winningLotto) {
+  public void setWinningLotto(WinningLotto winningLotto) {
     this.winningLotto = winningLotto;
   }
 
