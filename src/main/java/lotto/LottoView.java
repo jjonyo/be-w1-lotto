@@ -13,27 +13,33 @@ public class LottoView {
 
     buyLotto(price);
 
-    Lotto winningLotto = createWinningLotto();
+    WinningLotto winningLotto = createWinningLotto();
     lottoService.setWinningLotto(winningLotto);
     lottoService.calculateLottoRank();
 
     calculateWinningResult(lottoService.getLottoList());
   }
 
-  private Lotto createWinningLotto() {
+  private WinningLotto createWinningLotto() {
     String winningNumber = inputWinningNumber();
+    int bonusNumber = inputBonusNumber();
 
     List<Integer> splitNumbers = Arrays.stream(winningNumber.split(", "))
             .mapToInt(Integer::parseInt)
             .boxed()
             .collect(Collectors.toList());
 
-    return new Lotto(splitNumbers);
+    return new WinningLotto(splitNumbers, bonusNumber);
   }
 
   private String inputWinningNumber() {
     System.out.println("지난 주 당첨 번호를 입력 해 주세요.");
     return scanner.nextLine();
+  }
+
+  private int inputBonusNumber() {
+    System.out.println("보너스 볼을 입력해 주세요.");
+    return scanner.nextInt();
   }
 
   private void buyLotto(int price) {
@@ -98,7 +104,8 @@ public class LottoView {
     System.out.println("당첨 통계\n---------");
     for (Rank rank : Rank.values()) {
       int count = map.get(rank);
-      System.out.printf("%d개 일치 (%d원)- %d개%n", rank.getCountOfMatch(), rank.getWinningMoney(), count);
+      String bonusString = rank == Rank.SECOND ? "보너스볼 일치" : "";
+      System.out.printf("%d개 일치 %s (%d원)- %d개%n", rank.getCountOfMatch(), bonusString, rank.getWinningMoney(), count);
     }
     System.out.printf("총 수익률은 %.2f%%입니다.%n", earningRatio);
   }
