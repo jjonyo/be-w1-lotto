@@ -72,7 +72,7 @@ public class LottoView {
     printWinningResult(resultMap, earningRatio);
   }
 
-  private Map<Rank, Integer> getResultMap(List<Lotto> lottoList) {
+  public Map<Rank, Integer> getResultMap(List<Lotto> lottoList) {
     Map<Rank, Integer> map = new EnumMap<>(Rank.class);
 
     for (Rank rank : Rank.values()) {
@@ -87,7 +87,7 @@ public class LottoView {
     return map;
   }
 
-  private double getEarningRatio(List<Lotto> lottoList) {
+  public double getEarningRatio(List<Lotto> lottoList) {
     long earningPrice = 0;
 
     for (Lotto lotto : lottoList) {

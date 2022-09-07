@@ -12,7 +12,6 @@ public class Lotto extends BaseLotto {
   public void calculateRank(WinningLotto winningLotto) {
     int countOfMatch = countMatchNumber(winningLotto);
 
-    //TODO :: bonus 맞는지 확인
     boolean isBonusMatch = getBonusMatch(winningLotto);
 
     this.rank = Rank.valueOf(countOfMatch, isBonusMatch);
